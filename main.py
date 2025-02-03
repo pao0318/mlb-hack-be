@@ -12,6 +12,7 @@ from typing import List, Optional, Dict
 import json
 import uvicorn
 import logging
+import os
 
 
 from rag_utils.embedder import generate_embedding
@@ -408,4 +409,5 @@ def parse_career_stats(stats_text: str) -> dict:
 
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", host = "127.0.0.1", port = 8080, reload = True)
+    port = int(os.getenv("PORT", 8000))
+    uvicorn.run(app, host="0.0.0.0", port=port)
