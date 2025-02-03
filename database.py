@@ -10,33 +10,6 @@ class Database:
             api_key=Config.QDRANT_API_KEY
         )
 
-    def create_collection(self):
-        """Create the users collection with necessary fields"""
-        try:
-            self.client.recreate_collection(
-                collection_name=Config.COLLECTION_NAME,
-                  vectors_config = {
-                    "size": 384, 
-                    "distance": "Cosine"
-                },
-                schema={
-                    "email": models.PayloadSchemaType.KEYWORD,
-                    "name": models.PayloadSchemaType.KEYWORD,
-                    "password_hash": models.PayloadSchemaType.KEYWORD,
-                    "fav_team": models.PayloadSchemaType.KEYWORD,
-                    "user_id": models.PayloadSchemaType.KEYWORD
-                }
-            )
-            self.client.create_payload_index(
-                collection_name=Config.COLLECTION_NAME,
-                field_name="email",
-                field_schema=models.PayloadSchemaType.KEYWORD
-            )
-            return True
-        except Exception as e:
-            print(f"Collection error: {e}")
-            return False
-
     def find_user_by_email(self, email):
         """Find a user by email"""
         result = self.client.scroll(

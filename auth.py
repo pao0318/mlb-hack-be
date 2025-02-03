@@ -5,7 +5,6 @@ from models import User
 class AuthService:
     def __init__(self):
         self.db = Database()
-        self.db.create_collection()
     def signup(self, email, name, password, fav_team):
         """Register a new user"""
         try:
